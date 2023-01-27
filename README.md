@@ -1,7 +1,7 @@
 # HePy
 A python implementation of 'HeFTy': A software package for modelling helium (He) cooling ages in apatite and zircon [^1]
 
-- Based on the DAAM matlab scripts created by Willy Guenther [^2]
+- Based on the DAAM matlab scripts by W. Guenther [^2]
 - Redesigned as a module and optimised for python
 - Leverages scipy and other standard python libraries
 
