@@ -28,9 +28,16 @@ ap1_age = apatite_1.solve(t,T,k='rdaam')
 ```
 ### Numerical stability of the 1D diffusion solution
 
-The modelled grain is discretised where:
+For the Crank–Nicolson, the modelled grain is discretised as:
 
-tT history should be resampled
+$dx = \dfrac{r}{512}$
+
+Where $r$ is the radius of the grain. A safe timestep duration would be defined by:
+
+$dt = \dfrac{k \times 0.5}{dx^2}$
+
+However, where $T >> T \tiny closure$, the diffusivity $k$, increases rapidly, and  $dt \Rightarrow 0$.
+The diffusion solver seems to be stable where $dt = \leq 0.2 Ma $, and so tT paths should be resampled (e.g., using linear interpolation)before running the .solve() function.
 
 ### How to acknowledge this code
 If you use HePy in your scientific work, please acknowledge it as:
