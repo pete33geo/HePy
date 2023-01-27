@@ -25,4 +25,4 @@ ap1_age = apatite_1.solve(t,T,k='rdaam')
 
 [^1]: Ketcham, 2005
 [^2]: Flowers et al., 2009
-[^1]: Farley et al., 2000
+[^3]: Farley et al., 2000
