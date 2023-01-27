@@ -23,7 +23,7 @@ ap_1 = Model_He(mineral='apatite',U=20,Th=2,r=70)
 ap_1_age = apatite_1.solve(t,T,k='rdaam')
 ```
 ### Numerical stability of the 1D diffusion solution
-The 1D diffusion solver generally converges where $dt \leq 0.2$ [Myrs], and so tT paths where $\min(dt) \geq 0.2$ [Myrs] should be resampled (e.g., using linear interpolation) before running the Model_He.solve() function.
+The 1D diffusion solver generally converges where $dt \leq 0.2$ [Myrs], and so tT paths where $\min(dt) \geq 0.2$ [Myrs] should be resampled (e.g., using linear interpolation) before running the *Model_He.solve()* function. This may be improved in a future update.
 
 ### How to acknowledge this code
 If you use HePy in your scientific work, please acknowledge it as:
