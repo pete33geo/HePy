@@ -8,8 +8,9 @@ Thermal Diffusion [^3]
 DAAM [^4]
 
 ## Modelling approach
-
-HePy leverages scipy to solve the 1D diffusion equation in sphere.
+- Based on the DAAM matlab scripts created by Willy Guenther
+- Redesigned as a module and optimised for python
+- Leverages scipy and other standard python libraries
 
 ### Example: Calculating an apatite helium cooling age using the RDAAM diffusion model
 ```
