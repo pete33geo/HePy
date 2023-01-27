@@ -1,5 +1,5 @@
 # HePy
-A python implementation of 'HeFTy': A software package for modelling helium (He) cooling ages in apatite and zircon [^1]
+A python implementation of the 'HeFTy' approach [^1] to modelling helium (He) cooling ages in apatite and zircon:
 
 - Based on the DAAM matlab scripts by W. Guenther [^2]
 - Redesigned as a module and optimised for python
@@ -11,10 +11,6 @@ A python implementation of 'HeFTy': A software package for modelling helium (He)
 - Zircon radiation damage and annealing [^5]
 - Zircon thermally-controlled He diffusion [^6]
 
-### Modelling approach
-
-Add flow diagram here!
-
 ### Example: Calculating an apatite helium cooling age using the RDAAM diffusion model
 ```
 import numpy as np
@@ -24,20 +20,10 @@ t = np.arange(60,0,-2)
 T = np.arange(120,0,-4)
 
 ap_1 = Model_He(mineral='apatite',U=20,Th=2,r=70)
-ap1_age = apatite_1.solve(t,T,k='rdaam')
+ap_1_age = apatite_1.solve(t,T,k='rdaam')
 ```
 ### Numerical stability of the 1D diffusion solution
-
-For the Crank–Nicolson, the modelled grain is discretised as:
-
-$dx = \dfrac{r}{512}$
-
-Where $r$ is the radius of the grain. A safe timestep duration would be defined by:
-
-$dt = \dfrac{k \times 0.5}{dx^2}$
-
-However, where $T >> T \tiny closure$, the diffusivity $k$, increases rapidly, and  $dt \Rightarrow 0$.
-The diffusion solver seems to be stable where $dt = \leq 0.2 Ma $, and so tT paths should be resampled (e.g., using linear interpolation)before running the .solve() function.
+The 1D diffusion solver generally converges where $dt \leq 0.2$ [Myrs], and so tT paths where $\min(dt) \geq 0.2$ [Myrs] should be resampled (e.g., using linear interpolation) before running the Model_He.solve() function.
 
 ### How to acknowledge this code
 If you use HePy in your scientific work, please acknowledge it as:
