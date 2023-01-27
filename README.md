@@ -9,7 +9,7 @@ DAAM [^4]
 
 ## Modelling approach
 
-HePy leverages scipy to solve the 1D diffusion equation.
+HePy leverages scipy to solve the 1D diffusion equation in sphere.
 
 ### Example: Calculating an apatite helium cooling age using the RDAAM diffusion model
 ```
@@ -33,4 +33,4 @@ If you use HePy in your scientific work, please acknowledge it
 [^1]: Ketcham, 2005
 [^2]: Flowers et al., 2009
 [^3]: Farley et al., 2000
-[^3]: DAAM matlab script by Willy Guenthner https://github.com/wrguenthner/DAAM
+[^4]: DAAM matlab script by Willy Guenthner https://github.com/wrguenthner/DAAM
