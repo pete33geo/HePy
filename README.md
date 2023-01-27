@@ -1,15 +1,10 @@
 # HePy
-A python implementation of the 'HeFTy' approach [^1] to modelling helium (He) cooling ages in apatite and zircon:
+A python implementation of the 'HeFTy' approach[^1] to modelling helium (He) cooling ages in apatite and zircon:
 
 - Based on the DAAM matlab scripts by W. Guenther [^2]
 - Redesigned as a module and optimised for python
 - Leverages scipy and other standard python libraries
-
-### Implemented diffusion models
-- Apatite radiation damage and annealing [^3]
-- Apatite thermally-controlled He diffusion [^4]
-- Zircon radiation damage and annealing [^5]
-- Zircon thermally-controlled He diffusion [^6]
+- Includeds apatite[^3] and zircon[^5] radiation damage and annealing models (RDAAM)
 
 ### Example: Calculating an apatite helium cooling age using the RDAAM diffusion model
 ```
@@ -24,13 +19,6 @@ ap_1_age = apatite_1.solve(t,T,k='rdaam')
 ```
 ### Numerical stability of the 1D diffusion solution
 The 1D diffusion solver generally converges where $dt \leq 0.2$ [Myrs], and so tT paths where $\max(dt) \geq 0.2$ [Myrs] should be resampled (e.g., using linear interpolation) before running the *Model_He.solve()* function. This may be improved in a future update.
-
-### How to acknowledge this code
-If you use HePy in your scientific work, please acknowledge it as:
-
-> HePy v.01 - A python implementation of HeFTy DOI:
-
-Key references below should also be referenced (depending on the diffusion model used).
 
 [^1]: Ketcham, R.A., 2005, Forward and inverse modeling of low-temperature thermochronometry data: Reviews in Mineralogy and Geochemistry , v. 58, no. 1, p. 275–314, https://doi.org/10.2138/rmg.2005.58.11
 [^2]: DAAM matlab script by Willy Guenthner https://github.com/wrguenthner/DAAM
