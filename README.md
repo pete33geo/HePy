@@ -5,7 +5,7 @@ A python implementation of the 'HeFTy' modelling approach of Ketcham (2005)
 HeFTy [^1]
 RDAAM [^2]
 Thermal Diffusion [^3]
-DAAM[^4]
+DAAM [^4]
 
 ## Modelling approach
 
