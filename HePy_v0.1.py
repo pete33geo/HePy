@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Aug  8 18:02:31 2021
-@author: Peter
-"""
-# -*- coding: utf-8 -*-
+# HePy_v0.1.py
+
 import sys
 import numpy as np
 from scipy import integrate
