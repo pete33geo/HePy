@@ -219,7 +219,7 @@ class Model_He():
             diffusivities = ((Do * np.exp(-Ea / (R * T_mean)))
                              / (trap_diff * np.exp(Et / (R * T_mean)) + 1))
             
-            self.diffusivities = diffusivities * 1e4#cm2/s to microns2/s
+#            self.diffusivities = diffusivities * 1e4#cm2/s to microns2/s ####### CHECK UNITS!
         
         if self.mineral =='zircon':
             alphai = ((8 * U238 * (np.exp(lmbd238 * t1) - np.exp(lmbd238 * t2)))
