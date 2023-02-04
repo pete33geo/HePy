@@ -18,7 +18,7 @@ ap_1 = Model_He(mineral='apatite',U=10,Th=40,r=100)
 ap_1_age = apatite_1.solve(t,T,k='rdaam')
 ```
 ### Numerical stability of the 1D diffusion solution
-The 1D diffusion solver converges where $dt \leq 0.5$ [Myrs], and so tT paths where $\max(dt) \geq 0.5 Myrs$ should be resampled (e.g., using linear interpolation) before running the *Model_He.solve()* function (based on $\max (dT/dt > 20 ^{\circ}C/Myr)$ and $max\(T) > 80^{\circ}C)$. The module will be improved with a safer ***get_dt*** function in a future update.
+The 1D diffusion solver converges where $dt \leq 0.5  Myrs$, and so tT paths where $\max(dt) \geq 0.5  Myrs$ should be resampled (e.g., using linear interpolation) **before** running the *Model_He.solve()* function. Care should be taken as this is assumed based on testing where $\max (dT/dt > 20 ^{\circ}C/Myr)$ and $max\(T) > 80^{\circ}C)$. The module will be improved with a safer ***get_dt*** function in a future update.
 
 [^1]: Ketcham, R.A., 2005, Forward and inverse modeling of low-temperature thermochronometry data: Reviews in Mineralogy and Geochemistry , v. 58, no. 1, p. 275–314, https://doi.org/10.2138/rmg.2005.58.11
 [^2]: DAAM matlab script by Willy Guenthner https://github.com/wrguenthner/DAAM
