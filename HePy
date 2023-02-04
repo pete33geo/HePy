@@ -1,11 +1,17 @@
-# HePy_v0.1.py
+# -*- coding: utf-8 -*-
+"""
+HePy v0.1
 
+Created on Sun Aug 8 2021
+
+@author: pete33geo
+https://github.com/pete33geo/HePy.py
+"""
 import sys
 import numpy as np
 from scipy import integrate
 from scipy import sparse
 from scipy.sparse.linalg import spsolve
-import time as runningtime
 
 
 class Model_He():
@@ -17,17 +23,14 @@ class Model_He():
         
         Parameters
         ----------
-        mineral:
+        mineral : str
             'apatite' or 'zircon'
-        U:
-            Total Uranium in ppm
-        Th:
-            Thorium in ppm
-        r:
-            Equivalent spherical radius in microns
-        
-        Examples
-        --------
+        U : int
+            Total Uranium [ppm]
+        Th : int
+            Thorium [ppm]
+        r : int
+            Equivalent spherical radius [microns]
         """
         #mineral-specific stopping distances
         if mineral =='apatite':
@@ -50,7 +53,7 @@ class Model_He():
         
         #create model domain for alpha eject and diffusion calculations
         self.r = r
-        self.nodes = 513 #can be any number - reduce to speed up?
+        self.nodes = 513
         self.rstep = r/self.nodes
         self.steps = np.arange(1,self.nodes+1)
         self.x = (self.steps - 0.5) * self.rstep
@@ -60,9 +63,10 @@ class Model_He():
         self.U235 = ((U / 1e6) * 0.007204/238.02891) * 6.02214179e23
         self.Th232 = ((Th / 1e6) / 232.03805) * 6.02214179e23
         
-        self.eject = self.eject_factor()
+        self.eject = self.ejection_factor()
+
     
-    def eject_factor (self):
+    def ejection_factor (self):
         """Returns alpha ejection correction factors for each parent isotope.
         Called internally by main modelling function.
             
@@ -150,8 +154,8 @@ class Model_He():
         new_tracks = np.diag_indices_from(dam)
         dam[new_tracks] = d_anneal(dt,T_mean)
         
-        #calculate annealing using 'equivalent time' (see e.g., ketcham 2005)
-        for i in range(1,len(t)-1):
+        #calculate annealing using 'equivalent time' (see e.g., K etcham 2005)
+        for i in range(1,len(self.t)-1):
             teqv = t_eqv(T_mean[i],dam[i-1,:i])
             teqv = teqv + dt[i]
             dam[i,:i] = d_anneal(teqv,T_mean[i])
@@ -172,6 +176,7 @@ class Model_He():
             dam[dam<(0.36 / 1.25 + 0.2)] = 0
             
             self.damage = dam
+
 
     def rdaam_diffusivity(self):
         """Calculate diffusivity based on the damage calculated in the fission
@@ -216,10 +221,10 @@ class Model_He():
                     
             trap_diff = psi * anneal_d + omega * anneal_d**3
             
-            diffusivities = ((Do * np.exp(-Ea / (R * T_mean)))
+            diffusivities =  1e8 * ((Do * np.exp(-Ea / (R * T_mean)))
                              / (trap_diff * np.exp(Et / (R * T_mean)) + 1))
             
-#            self.diffusivities = diffusivities * 1e4#cm2/s to microns2/s ####### CHECK UNITS!
+            self.diffusivities = diffusivities
         
         if self.mineral =='zircon':
             alphai = ((8 * U238 * (np.exp(lmbd238 * t1) - np.exp(lmbd238 * t2)))
@@ -251,10 +256,11 @@ class Model_He():
             diffusivities = (DI / DN17a2 + (1 - DI) / Dtorta2)**-1
             
             self.diffusivities = diffusivities * self.r**2
+ 
         
     def thermal_diffusion(self):
         """Diffusion (Farley et el., 2000) calculated as a function of
-        temperature, with no rdaam. Inherits
+        temperature, with no rdaam.
         """
         if self.mineral == 'apatite':
             Do = 50 #cm2/s
@@ -271,6 +277,7 @@ class Model_He():
         
         self.diffusivities = d  
 
+
     def diffusion_solve(self):
         """Calculates a model cooling age given grain data, and a 
         time-temperature path.
@@ -279,7 +286,6 @@ class Model_He():
         -------
         Models age in million years
         """
-        #these will be replaced by global variables
         nodes = self.nodes
         rstep = self.rstep
         x = self.x
@@ -340,7 +346,9 @@ class Model_He():
         u = _1D_solver()
 
         integral = (u / x) * 4 * np.pi * x**2
+        
         totalHe = integrate.romb(integral,dx=rstep)
+        
         totalHe = totalHe / (4 * np.pi / 3)
 
         total238 = 8 * self.U238 * r**3
@@ -355,8 +363,7 @@ class Model_He():
         left_sum = (total238 * ft238
                     + total235 * ft235
                     + total232 * ft232
-                    + totalHe
-                    )
+                    + totalHe)
         
         lo_age = 0
         hi_age = t[0] * 1e6
@@ -366,8 +373,7 @@ class Model_He():
             
             mid_val = (total238 * ft238 * np.exp(lmbd238 * mid_age)
                        + total235 * ft235 * np.exp(lmbd235 * mid_age)
-                       + total232 * ft232 * np.exp(lmbd232 * mid_age)
-                       )
+                       + total232 * ft232 * np.exp(lmbd232 * mid_age))
             
             if mid_val < left_sum:
                 lo_age = mid_age
@@ -377,27 +383,28 @@ class Model_He():
         model_age = ((hi_age + lo_age) / 2) / 1e6
 
         return model_age
+   
     
     def solve(self,t,T,k='rdaam'):
         """Main function to calculate He age for an inputted tT path.
-        Diffusivity can be generated by RDAAM (Flowers et al., 2009), or simple
-        diffusion (Farley et al., 2000) with no damage or annealing. Inherits
+        Diffusivity may use RDAAM (Apatite = Flowers et al. [2009];
+        Zircon = Guenther et al. [2013]), or simple diffusion (Farley et al., 2000) with no damage or annealing. Inherits
         alpha ejection correction.
 
         Inputs
         ------
-        t:
-            Time in million years
-        T:
-            Temperature in degrees C
-        k:
+        t : np.array
+            Time [Myrs]
+        T : np.array
+            Temperature [C]
+        k : str
             Diffusion model 'rdaam' (default) or 'simple'
 
         Returns
         -------
         Model He age [Ma]
         """
-        startTime = runningtime.time()
+        #startTime = runningtime.time()
         
         if np.max(T) < 80:
             print('\n Warning: max T should be >80 degrees C' +
@@ -411,6 +418,7 @@ class Model_He():
 
         self.T = T
         self.t = t
+        
         self.t1 = self.t[:-1] * 1e6
         self.t2 = self.t[1:] * 1e6
                 
@@ -418,8 +426,6 @@ class Model_He():
 
         if k == 'rdaam':
             self.rdaam_diffusivity()
-            #self.t, self.T = self._get_dt()
-            #self.rdaam_diffusivity()
 
         elif k == 'simple':
             self.thermal_diffusion()
@@ -428,7 +434,5 @@ class Model_He():
             sys.exit()
         
         He_age = self.diffusion_solve()
-        print('\n .solve() ran in {:.2f}'.format(runningtime.time() - startTime))
-        print('\n Helium age: {:.1f} Ma'.format(He_age))
 
         return He_age
