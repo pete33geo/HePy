@@ -1,7 +1,7 @@
 # HePy
 A python implementation of the 'HeFTy' approach[^1] to modelling helium (He) cooling ages in apatite and zircon:
 
-- Based on the DAAM matlab scripts by W. Guenther [^2]
+- Based on the DAAM matlab scripts[^2] in Guenthner (2021[^7])
 - Redesigned as a module and optimised for python
 - Leverages scipy and other standard python libraries
 - Includes apatite[^3] and zircon[^5] radiation damage and annealing models (RDAAM)
@@ -27,3 +27,4 @@ The 1D diffusion solve converges where $dt \leq 0.5  Myrs$, and so tT paths wher
 [^4]: Farley, K.A., 2000, Helium diffusion from apatite: General behavior as illustrated by Durango fluorapatite: Journal of Geophysical Research. Solid Earth , v. 105, p. 2903–2914, https://doi.org/10.1029/1999JB900348
 [^5]: Guenthner, W.R., Reiners, P.W., Ketcham, R.A., Nasdala, L., and Giester, G., 2013, Helium diffusion in natural zircon: Radiation damage, anisotropy, and the interpretation of zircon (U-Th)/He thermochronology: American Journal of Science , v. 313, no. 3, p. 145–198, https://doi.org/10.2475/03.2013.01
 [^6]: Reiners, P.W., Spell, T.L., Nicolescu, S., and Zanetti, K.A., 2004, Zircon (U-Th)/He thermochronometry: He diffusion and comparisons with 40Ar/39Ar dating: Geochimica et Cosmochimica Acta, v. 68, no. 8, p. 1857–1887, https://doi.org/10.1016/j.gca.2003.10.021
+[^7] Guenthner, W. R. (2021). Implementation of an alpha damage annealing model for zircon (U-Th)/He thermochronology with comparison to a zircon fission track annealing model. Geochemistry, Geophysics, Geosystems, v. 22, https://doi.org/10.1029/2019GC008757
