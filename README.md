@@ -1,5 +1,5 @@
 # HePy
-A python implementation of the 'HeFTy' approach[^1] to modelling helium (He) cooling ages in apatite and zircon:
+A python code for modelling helium (He) cooling ages in apatite and zircon, following the approach of Ketcham[^1]:
 
 - Based on the DAAM matlab scripts by W. Guenthner [^2][^7]
 - Redesigned as a module and optimised for python
