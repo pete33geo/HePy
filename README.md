@@ -8,7 +8,7 @@ A python code for modelling helium (He) cooling ages in apatite and zircon, foll
 ### Example: Calculating an apatite helium cooling age using the RDAAM diffusion model
 ```
 import numpy as np
-from HePy_v0.1 import Model_He
+from HePy import Model_He
 
 t = np.arange(60,0,-0.5)
 T = np.arange(120,0,-4)
