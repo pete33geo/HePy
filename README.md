@@ -1,11 +1,9 @@
 # HePy
 A python code for modelling helium (He) cooling ages in apatite and zircon, following the approach of Ketcham[^1]:
-
-- Based on the DAAM matlab scripts by W. Guenthner [^2][^7]
-- Redesigned as a module and optimised for python
-- Leverages scipy and other standard python libraries
+- Designed as a python module, leveraging scipy and other standard python libraries
 - Includes apatite[^3] and zircon[^5] radiation damage and annealing models (RDAAM)
-- Also includes simple diffusion in apatite [^4] and zircon [^6]
+- RDAAM implementations based on the DAAM matlab scripts by W. Guenthner [^2][^7]
+- Also includes simple diffusion as a function of temperature, in apatite [^4] and zircon [^6]
 
 ### Example: Calculating an apatite helium cooling age using the RDAAM diffusion model
 ```
