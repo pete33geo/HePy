@@ -5,6 +5,8 @@ A python code for modelling helium (He) cooling ages in apatite and zircon, foll
 - RDAAM implementations are based on the DAAM matlab scripts by W. Guenthner [^2]
 - Also includes simple diffusion as a function of temperature, in apatite [^4] and zircon [^6]
 
+[![DOI](https://zenodo.org/badge/593777714.svg)](https://zenodo.org/badge/latestdoi/593777714)
+
 ### Example: Calculating an apatite helium cooling age using the RDAAM diffusion model
 ```
 import numpy as np
