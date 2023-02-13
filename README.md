@@ -14,7 +14,7 @@ t = np.arange(60,0,-0.5)
 T = np.arange(120,0,-4)
 
 ap_1 = Model_He(mineral='apatite',U=10,Th=40,r=100)
-ap_1_age = apatite_1.solve(t,T,k='rdaam')
+print(ap_1.solve(t,T,k='rdaam'))
 ```
 ### Convergence of the 1D diffusion solution
 The 1D diffusion solution *generally* converges where $dt \leq 0.5  Myrs$, and so tT paths where $\max(dt) \geq 0.5  Myrs$ should be resampled (e.g., using linear interpolation) **before** running the *Model_He.solve()* function. Care should be taken as this is assumed based on testing where $\max (dT/dt < 20 ^{\circ}C/Myr)$ and $T >> Tclosure$. The module will be improved with a resampling function in a future update.
