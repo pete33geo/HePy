@@ -21,7 +21,7 @@ class Model_He():
     
     def __init__(self,mineral,U,Th,r):
         """Model helium cooling ages in apatite and zircon, following the
-        approch of Ketcham (2005). The Model_He() object holds grain-specific
+        approach of Ketcham (2005). The Model_He() object holds grain-specific
         data, called when calculating model cooling ages
         
         Parameters
@@ -345,13 +345,14 @@ class Model_He():
     def solve(self,t,T,k='rdaam'):
         """Main function to calculate He age for an inputted tT path.
         Diffusivity may use RDAAM (Apatite = Flowers et al. [2009];
-        Zircon = Guenthner et al. [2013]), or simple diffusion (Farley et al., 2000) with no damage or annealing. Inherits
-        alpha ejection correction.
+        Zircon = Guenthner et al. [2013]), or simple diffusion
+        (Apatite = Farley et al. [2000]; Zircon = Reiners et al. [2004]
+        with no damage or annealing. Inherits alpha ejection correction.
 
         Inputs
         ------
         t : np.array
-            Time [Myrs]
+            Time [Myrs], resampled so max(dt) < 0.5
         T : np.array
             Temperature [C]
         k : str (optional)
